@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "642187576876",
+    "project_id": "arong-36ff9",
+    "storage_bucket": "arong-36ff9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642187576876:android:0697658cc9e359af82f389",
+        "android_client_info": {
+          "package_name": "com.example.arong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642187576876-s1qtc7d3safqqpjtvdg471oilkj519qm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.arong",
+            "certificate_hash": "f6a4f649aa884f1112c2daae2e2e431372e9b349"
+          }
+        },
+        {
+          "client_id": "642187576876-3p2j8cjr21e8vf8b58ps3f485ttu318i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo4-ELKp4fpJWRBJTaqrqJd3bP2Uz-eeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642187576876-3p2j8cjr21e8vf8b58ps3f485ttu318i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
