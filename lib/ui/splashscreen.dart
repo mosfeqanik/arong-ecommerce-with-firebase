@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:arong/const/appcolors.dart';
+import 'package:arong/ui/bottom_nav_bar.dart';
 import 'package:arong/ui/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 5), ()=>Navigator.push(context, CupertinoPageRoute(builder: (__)=>SignUpScreen())));
+    Timer(Duration(seconds: 5), ()=>Navigator.push(context, CupertinoPageRoute(builder: (__)=>BottomNavController())));
   }
   @override
   Widget build(BuildContext context) {
