@@ -1,4 +1,5 @@
 
+import 'package:arong/ui/bottom_nav_bar.dart';
 import 'package:arong/ui/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
