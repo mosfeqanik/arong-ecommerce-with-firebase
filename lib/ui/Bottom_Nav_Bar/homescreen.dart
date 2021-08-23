@@ -24,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       for (int i = 0; i < carouselCollection.docs.length; i++) {
         _carouselImages.add(carouselCollection.docs[i]["img_path"]);
-
       }
     });
     return carouselCollection.docs;
@@ -154,23 +153,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemCount: _products.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 3),
+                      crossAxisCount: 2, childAspectRatio: 1),
                   itemBuilder: (_, index) {
-                    return Card(
-                      elevation: 3,
-                      child: Column(
-                        children: [
-                          AspectRatio(
-                              aspectRatio: 2,
-                              child: Image.network(
-                                  _products[index]["product_img"][0])),
-                          Text("${_products[index]["product_name"]}"),
-                          Text("${_products[index]["product_price"]}"),
-                        ],
+                    return GestureDetector(
+                      onTap: ()=>(){},
+                      child: Card(
+                        elevation: 3,
+                        child: Column(
+                          children: [
+                            AspectRatio(
+                                aspectRatio: 3/2,
+                                child: Container(
+                                    child: Image.network(
+                                      _products[index]["product_img"][0],
+                                      fit: BoxFit.fitHeight,
+                                      loadingBuilder: (context,child,progress){
+                                        return progress ==null ?child: LinearProgressIndicator(
+                                            minHeight: .2,
+                                            backgroundColor: Colors.white,
+                                            valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent));
+                                      },
+                                    ))),
+                            Text("${_products[index]["product_name"]}"),
+                            Text(
+                                "${_products[index]["product_price"].toString()}"),
+                          ],
+                        ),
                       ),
                     );
                   }),
-            )
+            ),
           ],
         ),
       ),
