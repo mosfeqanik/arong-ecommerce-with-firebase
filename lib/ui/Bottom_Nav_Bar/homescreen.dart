@@ -1,10 +1,13 @@
 import 'package:arong/const/appcolors.dart';
+import 'package:arong/ui/product_details_screen.dart';
+import 'package:arong/ui/sceach_screen_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/painting.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> _carouselImages = [];
   List _products = [];
   var _dotPosition = 0;
-  TextEditingController _searchController = TextEditingController();
   var _fireStoreInstance = FirebaseFirestore.instance;
 
   fetchCarouselImage() async {
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SizedBox(
                       height: 50.h,
                       child: TextFormField(
-                        controller: _searchController,
+                        readOnly: true,
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             focusedBorder: OutlineInputBorder(
@@ -85,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             hintText: "Search Products here",
                             hintStyle: TextStyle(fontSize: 15.sp)),
+                        onTap: ()=>Navigator.push(context, CupertinoPageRoute(builder: (__)=>SearchScreen())),
                       ),
                     ),
                   ),
@@ -92,10 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 50.h,
                     width: 50.h,
                     color: AppColors.deep_green,
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 30,
+                    child: InkWell(
+                      onTap: ()=>Navigator.push(context, CupertinoPageRoute(builder: (__)=>SearchScreen())),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   )
                 ],
@@ -156,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 2, childAspectRatio: 1),
                   itemBuilder: (_, index) {
                     return GestureDetector(
-                      onTap: ()=>(){},
+                      onTap:()=>Navigator.push(context,MaterialPageRoute(builder: (_)=>ProductDetailScreen(_products[index]))),
                       child: Card(
                         elevation: 3,
                         child: Column(
@@ -166,15 +172,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                     child: Image.network(
                                       _products[index]["product_img"][0],
-                                      fit: BoxFit.fitHeight,
                                       loadingBuilder: (context,child,progress){
                                         return progress ==null ?child: LinearProgressIndicator(
-                                            minHeight: .2,
                                             backgroundColor: Colors.white,
                                             valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent));
                                       },
                                     ))),
-                            Text("${_products[index]["product_name"]}"),
+                            Text("${_products[index]["product_name"]}",style: TextStyle(fontSize: 22.sp,fontWeight: FontWeight.bold ),),
                             Text(
                                 "${_products[index]["product_price"].toString()}"),
                           ],
