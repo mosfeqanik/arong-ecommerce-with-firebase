@@ -6,8 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -42,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
           "product_description": productCollection.docs[i]
               ["product_description"],
           "product_price": productCollection.docs[i]["product_price"],
-
         });
         print(productCollection.docs[i]["product_price"]);
       }
     });
+
     return productCollection.docs;
   }
 
@@ -87,7 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             hintText: "Search Products here",
                             hintStyle: TextStyle(fontSize: 15.sp)),
-                        onTap: ()=>Navigator.push(context, CupertinoPageRoute(builder: (__)=>SearchScreen())),
+                        onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (__) => SearchScreen())),
                       ),
                     ),
                   ),
@@ -96,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 50.h,
                     color: AppColors.deep_green,
                     child: InkWell(
-                      onTap: ()=>Navigator.push(context, CupertinoPageRoute(builder: (__)=>SearchScreen())),
+                      onTap: () => Navigator.push(context,
+                          CupertinoPageRoute(builder: (__) => SearchScreen())),
                       child: Icon(
                         Icons.search,
                         color: Colors.white,
@@ -162,23 +166,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 2, childAspectRatio: 1),
                   itemBuilder: (_, index) {
                     return GestureDetector(
-                      onTap:()=>Navigator.push(context,MaterialPageRoute(builder: (_)=>ProductDetailScreen(_products[index]))),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  ProductDetailScreen(_products[index]))),
                       child: Card(
                         elevation: 3,
                         child: Column(
                           children: [
                             AspectRatio(
-                                aspectRatio: 3/2,
-                                child: Container(
-                                    child: Image.network(
-                                      _products[index]["product_img"][0],
-                                      loadingBuilder: (context,child,progress){
-                                        return progress ==null ?child: LinearProgressIndicator(
+                              aspectRatio: 4 / 3,
+                              child: Container(
+                                child: Image.network(
+                                  _products[index]["product_img"][0],
+                                  loadingBuilder: (context, child, progress) {
+                                    return progress == null
+                                        ? child
+                                        : LinearProgressIndicator(
                                             backgroundColor: Colors.white,
-                                            valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent));
-                                      },
-                                    ))),
-                            Text("${_products[index]["product_name"]}",style: TextStyle(fontSize: 22.sp,fontWeight: FontWeight.bold ),),
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    Colors.greenAccent));
+                                  },
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "${_products[index]["product_name"]}",
+                              style: TextStyle(
+                                  fontSize: 22.sp, fontWeight: FontWeight.bold),
+                            ),
                             Text(
                                 "${_products[index]["product_price"].toString()}"),
                           ],

@@ -28,10 +28,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 30.0),
-                    // child: Image(
-                    //   image: AssetImage('images/handbag.jpg'),
-                    //   fit: BoxFit.fitHeight,
-                    // ),
                     child:AspectRatio(
                       aspectRatio: 19 / 9,
                       child: CarouselSlider(
