@@ -1,3 +1,4 @@
+import 'package:arong/widgets/custom_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController? _nameEditingController =
-      TextEditingController(text: "anik");
+  TextEditingController? _nameEditingController;
   TextEditingController? _phoneNumberEditingController;
   TextEditingController? _ageEditingController;
 
@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           "phone":_phoneNumberEditingController!.text,
           "age":_ageEditingController!.text,
         }
-    ).then((value) => print("Updated Successfully"));
+    ).then((value) => CustomToast.toast('Updated Successfully'));
   }
 
   @override

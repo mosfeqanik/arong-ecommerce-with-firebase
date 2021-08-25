@@ -2,7 +2,7 @@ import 'package:arong/const/appcolors.dart';
 import 'package:arong/ui/Bottom_Nav_Bar/cart.dart';
 import 'package:arong/ui/Bottom_Nav_Bar/favourites.dart';
 import 'package:arong/ui/Bottom_Nav_Bar/homescreen.dart';
-import 'package:arong/ui/Bottom_Nav_Bar/profile.dart';
+import 'package:arong/ui/Bottom_Nav_Bar/profilenupdate.dart';
 import 'package:arong/ui/sceach_screen_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
