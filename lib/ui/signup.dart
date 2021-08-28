@@ -1,7 +1,9 @@
 
 import 'package:arong/const/appcolors.dart';
+import 'package:arong/ui/login.dart';
 import 'package:arong/ui/user_add_info_form.dart';
 import 'package:arong/widgets/custom_toast.dart';
+import 'package:arong/widgets/share_pref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           password: _passwordEditController.text
       );
       var authCredential = userCredential.user;
-      print(authCredential!.uid);
+      Prefs.setBool(Prefs.IS_LOGGED_IN, true);
+      print(authCredential.uid);
       if(authCredential.uid.isNotEmpty){
         Navigator.push(context, CupertinoPageRoute(builder: (__)=>UserAddForm()));
       }else{
@@ -261,7 +264,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     color: AppColors.deep_green,
                                   ),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(builder: (context) => LogInScreen()),
+                                          (route) => false);
+                                },
                               )
                             ],
                           ),

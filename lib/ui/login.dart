@@ -1,7 +1,9 @@
 import 'package:arong/const/appcolors.dart';
 import 'package:arong/ui/Bottom_Nav_Bar/homescreen.dart';
 import 'package:arong/ui/bottom_nav_bar.dart';
+import 'package:arong/ui/signup.dart';
 import 'package:arong/widgets/custom_toast.dart';
+import 'package:arong/widgets/share_pref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +34,12 @@ class _LogInScreenState extends State<LogInScreen> {
           password: _passwordEditController.text
       );
       var authCredential = userCredential.user;
-      print(authCredential!.uid);
+      Prefs.setBool(Prefs.IS_LOGGED_IN, true);
+      print(authCredential.uid);
       if(authCredential.uid.isNotEmpty){
-        Navigator.push(context, CupertinoPageRoute(builder: (__)=>BottomNavController()));
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BottomNavController()),
+                (route) => false);
       }else{
         CustomToast.toast('Something is wrong');
       }
@@ -263,7 +268,11 @@ class _LogInScreenState extends State<LogInScreen> {
                                     color: AppColors.deep_green,
                                   ),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(builder: (context) => SignUpScreen()),
+                                          (route) => false);
+                                },
                               )
                             ],
                           ),

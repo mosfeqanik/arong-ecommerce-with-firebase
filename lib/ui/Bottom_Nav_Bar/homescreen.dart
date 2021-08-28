@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ["product_description"],
           "product_price": productCollection.docs[i]["product_price"],
         });
-        print(productCollection.docs[i]["product_price"]);
       }
     });
 
@@ -167,10 +166,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (_, index) {
                     return GestureDetector(
                       onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) =>
-                                  ProductDetailScreen(_products[index]))),
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ProductDetailScreen(_products[index]),
+                        ),
+                      ),
                       child: Card(
                         elevation: 3,
                         child: Column(
@@ -187,7 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             backgroundColor: Colors.white,
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
-                                                    Colors.greenAccent));
+                                                    Colors.greenAccent),
+                                          );
                                   },
                                 ),
                               ),

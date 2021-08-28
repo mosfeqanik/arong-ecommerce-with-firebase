@@ -1,3 +1,4 @@
+import 'package:arong/widgets/fetchProducts.dart';
 import 'package:flutter/material.dart';
 
 class FavouriteScreen extends StatefulWidget {
@@ -9,12 +10,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
-      body: Center(
-          child: Text(
-            "Favourite",
-            style: TextStyle(fontSize: 35),
-          )),
+      body: SafeArea(
+        child: fetchData("users-favourite-items"),
+      ),
     );
   }
 }

@@ -17,12 +17,12 @@ class _UserAddFormState extends State<UserAddForm> {
   TextEditingController _phoneNumberEditController = TextEditingController();
   TextEditingController _dobEditController = TextEditingController();
   TextEditingController _genderEditController= TextEditingController();
-  TextEditingController _ageEditController = TextEditingController();
+  TextEditingController _AddressEditController = TextEditingController();
 
   List<String> gender=["Male","Female","Others"];
 
   Future<void> _selectDateFromPicker(BuildContext context)async{
-    final DateTime? picked = await showDatePicker(
+    final DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime(DateTime.now().year - 20),
       firstDate: DateTime(DateTime.now().year - 30),
@@ -40,19 +40,13 @@ class _UserAddFormState extends State<UserAddForm> {
     var  currentUser = _auth.currentUser;
 
     CollectionReference _collectionRef = FirebaseFirestore.instance.collection("users-form-data");
-    return _collectionRef.doc(currentUser!.email).set({
+    return _collectionRef.doc(currentUser.email).set({
       "name":_nameEditController.text,
       "phone":_phoneNumberEditController.text,
       "dob":_dobEditController.text,
       "gender":_genderEditController.text,
-      "age":_ageEditController.text,
+      "address":_AddressEditController.text,
     }).then((value) => Navigator.push(context, MaterialPageRoute(builder: (_)=>BottomNavController()))).catchError((error)=>print("something is wrong. $error"));
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
   }
 
 
@@ -131,9 +125,9 @@ class _UserAddFormState extends State<UserAddForm> {
                     ),
                   ),
                   TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _ageEditController,
-                    decoration: InputDecoration(hintText: "Enter Your Age"),
+                    keyboardType: TextInputType.streetAddress,
+                    controller: _AddressEditController,
+                    decoration: InputDecoration(hintText: "Enter Your Contact address"),
                   ),
                   SizedBox(
                     height: 50.h,

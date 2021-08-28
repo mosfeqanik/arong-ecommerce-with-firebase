@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class ProductDetailScreen extends StatefulWidget {
   var _products;
@@ -21,31 +23,47 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
-        FirebaseFirestore.instance.collection("users-cart-items");
+    FirebaseFirestore.instance.collection("users-cart-items");
     return _collectionRef
-        .doc(currentUser!.email)
+        .doc(currentUser.email)
         .collection("items")
         .doc()
         .set({
-      "name": widget._products["product-name"],
-      "price": widget._products["product-price"],
-      "images": widget._products["product-img"],
-    }).then((value) => CustomToast.toast('Updated Successfully'));
+      "name": widget._products["product_name"],
+      "price": widget._products["product_price"],
+      "images": widget._products["product_img"],
+    }).then((value) => CustomToast.toast('Added to Cart'));
+  }
+
+  Future checkOutNow() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUser = _auth.currentUser;
+    CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection("users-checkout-items");
+    return _collectionRef
+        .doc(currentUser.email)
+        .collection("items")
+        .doc()
+        .set({
+      "name": widget._products["product_name"],
+      "price": widget._products["product_price"],
+      "images": widget._products["product_img"],
+    }).then((value) => CustomToast.toast('Added to Checkout'));
   }
 
   Future addToFavourite() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
-        FirebaseFirestore.instance.collection("users-favourite-items");
+    FirebaseFirestore.instance.collection("users-favourite-items");
     return _collectionRef
-        .doc(currentUser!.email)
+        .doc(currentUser.email)
         .collection("items")
         .doc()
         .set({
-      "name": widget._products["product-name"],
-      "price": widget._products["product-price"],
-      "images": widget._products["product-img"],
+      "name": widget._products["product_name"],
+      "price": widget._products["product_price"],
+      "images": widget._products["product_img"],
     }).then((value) => CustomToast.toast('Added to favourite'));
   }
 
@@ -55,6 +73,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Stack(
               children: [
@@ -69,7 +88,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: CarouselSlider(
                         items: widget._products['product_img']
                             .map<Widget>(
-                              (item) => Padding(
+                              (item) =>
+                              Padding(
                                 padding: EdgeInsets.all(5),
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -81,11 +101,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
                                 ),
                               ),
-                            )
+                        )
                             .toList(),
                         options: CarouselOptions(
                           autoPlayCurve: Curves.fastOutSlowIn,
-                          autoPlay: true,
+                          autoPlay: false,
                           enlargeCenterPage: true,
                           viewportFraction: 1,
                           enlargeStrategy: CenterPageEnlargeStrategy.scale,
@@ -113,16 +133,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             onTap: () {},
                             child: Icon(
                               Icons.search,
+                              color: AppColors.deep_green,
                               size: 30.0,
                             ),
                           ),
                           StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection("users-favourite-items")
-                                .doc(FirebaseAuth.instance.currentUser!.email)
+                                .doc(FirebaseAuth.instance.currentUser.email)
                                 .collection("items")
                                 .where("name",
-                                    isEqualTo: widget._products['product-name'])
+                                isEqualTo: widget._products['product_name'])
                                 .snapshots(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
@@ -132,20 +153,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               return Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: IconButton(
-                                  onPressed: () => snapshot
-                                              .data.docs.length ==
-                                          0
+                                  onPressed: () =>
+                                  snapshot
+                                      .data.docs.length ==
+                                      0
                                       ? addToFavourite()
                                       : CustomToast.toast('Already Added'),
                                   icon: snapshot.data.docs.length == 0
                                       ? Icon(
-                                          Icons.favorite_outline,
-                                          color: AppColors.deep_green,
-                                        )
+                                    Icons.favorite_outline,
+                                    color: AppColors.deep_green,
+                                  )
                                       : Icon(
-                                          Icons.favorite,
-                                          color: AppColors.deep_green,
-                                        ),
+                                    Icons.favorite,
+                                    color: AppColors.deep_green,
+                                  ),
                                 ),
                               );
                             },
@@ -170,6 +192,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             SizedBox(
               height: 5.0,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, top: 20.0),
+              child: Text(
+                "Price: " + widget._products['product_price'].toString() +
+                    "\$ ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25.0,
+                  color: Colors.red,
+                  letterSpacing: 1.8,
+                ),
+              ),
             ),
             SizedBox(
               height: 5.0,
@@ -227,18 +262,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("users-cart-items")
-                      .doc(FirebaseAuth.instance.currentUser!.email)
+                      .doc(FirebaseAuth.instance.currentUser.email)
                       .collection("items")
                       .where("name",
-                          isEqualTo: widget._products['product-name'])
+                      isEqualTo: widget._products['product_name'])
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.data == null) {
                       return Text("");
                     }
                     return InkWell(
-                      onTap: () => snapshot.data.docs.length == 0
-                          ? addToFavourite()
+                      onTap: () =>
+                      snapshot.data.docs.length == 0
+                          ? addToCart()
                           : CustomToast.toast('Already Added'),
                       child: Container(
                         height: 50.0,
@@ -256,20 +292,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: Center(
                             child: snapshot.data.docs.length == 0
                                 ? Icon(
-                                    Icons.shopping_bag_outlined,
-                                    color: Colors.white,
-                                    size: 30.0,
-                                  )
+                              Icons.shopping_bag_outlined,
+                              color: Colors.white,
+                              size: 30.0,
+                            )
                                 : Icon(
-                                    Icons.shopping_bag,
-                                    color: Colors.white,
-                                    size: 30.0,
-                                  )),
+                              Icons.shopping_bag,
+                              color: Colors.white,
+                              size: 30.0,
+                            )),
                       ),
                     );
                   },
                 ),
               ],
+            ),
+            SizedBox(
+              height: 20.h,
             )
           ],
         ),
