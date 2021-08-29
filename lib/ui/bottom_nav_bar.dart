@@ -1,12 +1,12 @@
 import 'package:arong/const/appcolors.dart';
-import 'package:arong/ui/Bottom_Nav_Bar/cart.dart';
 import 'package:arong/ui/Bottom_Nav_Bar/favourites.dart';
 import 'package:arong/ui/Bottom_Nav_Bar/homescreen.dart';
 import 'package:arong/ui/Bottom_Nav_Bar/profilenupdate.dart';
-import 'package:arong/ui/login.dart';
 import 'package:arong/widgets/share_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'Bottom_Nav_Bar/cart.dart';
 
 class BottomNavController extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _BottomNavControllerState extends State<BottomNavController> {
   final _pages = [
     HomeScreen(),
     FavouriteScreen(),
-    CartScreen(),
+    MyCartScreen(),
     UserUpdateForm()
   ];
   int _currentIndex = 0;
@@ -36,31 +36,6 @@ class _BottomNavControllerState extends State<BottomNavController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 2,
-        title: Text(
-          "E-Commerce",
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.logout_outlined,
-              size: 25,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Prefs.clearPref();
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => LogInScreen()),
-                  (route) => false);
-            },
-          ),
-        ],
-      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.deep_green,
@@ -73,19 +48,19 @@ class _BottomNavControllerState extends State<BottomNavController> {
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              title: Text("Home"),
+              label: "Home",
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite_outlined),
-              title: Text("Home"),
+              label: "Home",
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart),
-              title: Text("Home"),
+              label: "Home",
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              title: Text("Home"),
+              label: "Home",
               backgroundColor: Colors.white)
         ],
         showSelectedLabels: false,

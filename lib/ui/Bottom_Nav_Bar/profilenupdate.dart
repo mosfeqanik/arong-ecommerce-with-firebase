@@ -1,5 +1,7 @@
 import 'package:arong/const/appcolors.dart';
+import 'package:arong/ui/login.dart';
 import 'package:arong/widgets/custom_toast.dart';
+import 'package:arong/widgets/share_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +77,31 @@ class _UserUpdateFormState extends State<UserUpdateForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 2,
+        title: Text(
+          "E-Commerce",
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.logout_outlined,
+              size: 25,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Prefs.clearPref();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => LogInScreen()),
+                      (route) => false);
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: Padding(

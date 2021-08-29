@@ -1,6 +1,8 @@
 import 'package:arong/const/appcolors.dart';
+import 'package:arong/ui/login.dart';
 import 'package:arong/ui/product_details_screen.dart';
 import 'package:arong/ui/sceach_screen_page.dart';
+import 'package:arong/widgets/share_pref.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -59,6 +61,31 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 2,
+        title: Text(
+          "E-Commerce",
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.logout_outlined,
+              size: 25,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Prefs.clearPref();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => LogInScreen()),
+                      (route) => false);
+            },
+          ),
+        ],
+      ),
       body: Container(
         child: Column(
           children: [
